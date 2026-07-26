@@ -1,34 +1,39 @@
-name: Generate Datasink Animation
+name: Update profile art
 
-on:
+# Refreshes the contribution graph SVG daily from real data.
+# Runs daily, plus whenever you push to main, plus on-demand.
+
+"on":
   schedule:
-    # Runs automatically every 24 hours at midnight UTC
-    - cron: "0 0 * * *"
-  workflow_dispatch: # Allows manual triggering from the GitHub Actions tab
+    - cron: "17 6 * * *"   # ~06:17 UTC every day
+  workflow_dispatch: {}
   push:
-    branches:
-      - main
+    branches: [main]
+
+permissions:
+  contents: write
 
 jobs:
-  generate:
-    permissions:
-      contents: write
+  heatmap:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
-    
     steps:
-      - name: Generate github-contribution-grid-snake.svg
-        uses: Platane/snk/svg-only@v3
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
         with:
-          github_user_name: ${{ github.repository_owner }}
-          outputs: |
-            dist/github-contribution-grid-snake.svg
-            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
-            
-      - name: Push animation to output branch
-        uses: crazy-max/ghaction-github-pages@v4
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Scrape real contribution data (no auth needed)
+        run: python scripts/fetch_contributions.py
+
+      - name: Render animated contribution graph SVG
+        run: python scripts/generate_streak_svg.py AVIVASHISHTA29 contrib-heatmap.svg
+
+      - name: Commit updated art
+        uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          target_branch: output
-          build_dir: dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: "chore: refresh contribution graph [skip ci]"
+          file_pattern: "data/contributions.json contrib-heatmap.svg"
