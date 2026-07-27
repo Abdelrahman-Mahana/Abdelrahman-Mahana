@@ -31,28 +31,22 @@ SECTION = "#58a6ff"  # blue section headers
 GREEN = "#3fb950"
 ACCENT = "#22d3ee"
 
-# content model: tuples describing each row
-# ("host",)                    -> "avi@github" + rule
-# ("kv", key, value)           -> orange key + light value
-# ("sec", title)               -> blue "— title —" rule
-# ("bul", text)                -> green dot + light text
-# ("gap",)                     -> vertical space
 ROWS = [
     ("host",),
-    ("kv", "Now", "Software Engineer @ Dock.us"),
-    ("kv", "Prev", "Founding Engineer @ Turgon AI"),
-    ("kv", "Also", "SDE + Instructor @ AccioJob (YC'21)"),
-    ("kv", "Edu", "B.Tech CS, IIIT Delhi '24"),
+    ("kv", "Role", "Data Scientist & AI Builder"),
+    ("kv", "Location", "Egypt"),
+    ("gap",),
+    ("sec", "Connect"),
+    ("bul", "Kaggle: kaggle.com/abdelrahmanmahana"),
+    ("bul", "Medium: abdelrahmanmahana.medium.com"),
+    ("bul", "Email: abdelrahmanmahana01@gmail.com"),
+    ("bul", "Dev.to: dev.to/abdelrahmanmahana"),
     ("gap",),
     ("sec", "Stack"),
-    ("kv", "Frontend", "React, Next.js, TypeScript, R3F"),
-    ("kv", "Backend", "Node, NestJS, GraphQL, Django"),
-    ("kv", "AI / ML", "LangChain, Vercel AI SDK, OpenAI"),
-    ("kv", "Cloud", "AWS, Docker, Vercel, Prisma"),
-    ("gap",),
-    ("sec", "Highlights"),
-    ("bul", "Taught 100,000+ developers to code"),
-    ("bul", "2 books · 100k+ podcast streams"),
+    ("kv", "AI/ML", "PyTorch, TensorFlow, OpenCV, Scikit-learn"),
+    ("kv", "Core", "Python, C++, Java, JS, HTML/CSS"),
+    ("kv", "Cloud", "AWS, GCP, Azure, MongoDB, SQL"),
+    ("kv", "Other", "Docker, Git, Django, Hadoop, Flutter"),
 ]
 
 
@@ -84,7 +78,7 @@ parts = [
 for i, dotcol in enumerate(["#ff5f56", "#ffbd2e", "#27c93f"]):
     parts.append(f'<circle cx="{PAD + i*16}" cy="{TITLEBAR_H/2}" r="5" fill="{dotcol}"/>')
 parts.append(f'<text x="{W/2}" y="{TITLEBAR_H/2 + 4}" fill="{MUTED}" font-size="12" '
-             f'text-anchor="middle">avi@github: ~$ neofetch</text>')
+             f'text-anchor="middle">abdelrahman@github: ~$ neofetch</text>')
 
 y = TITLEBAR_H + 30
 for i, row in enumerate(ROWS):
@@ -94,7 +88,7 @@ for i, row in enumerate(ROWS):
         continue
     if kind == "host":
         inner = (f'<text x="{KEY_X}" y="{y:.1f}" font-size="14" font-weight="700">'
-                 f'<tspan fill="{GREEN}">avi</tspan><tspan fill="{MUTED}">@</tspan>'
+                 f'<tspan fill="{GREEN}">abdelrahman</tspan><tspan fill="{MUTED}">@</tspan>'
                  f'<tspan fill="{ACCENT}">github</tspan></text>'
                  f'<line x1="{KEY_X+96}" y1="{y-4:.1f}" x2="{W-PAD}" y2="{y-4:.1f}" '
                  f'stroke="{FRAME}" stroke-opacity="0.8"/>')
